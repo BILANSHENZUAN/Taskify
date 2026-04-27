@@ -4,6 +4,10 @@ function normalizeEmail(email = "") {
     return String(email).trim().toLowerCase();
 }
 
+function findUserByEmail(email) {
+    return usersByEmail.get(normalizeEmail(email)) || null;
+}
+
 function createUser({ username, email, password }) {
     const normalizedEmail = normalizeEmail(email);
     const normalizedUsername = String(username || "").trim();
@@ -13,7 +17,7 @@ function createUser({ username, email, password }) {
         return null;
     }
 
-    if (usersByEmail.has(normalizedEmail)) {
+    if (findUserByEmail(normalizedEmail)) {
         return null;
     }
 
@@ -31,7 +35,7 @@ function createUser({ username, email, password }) {
 function authenticateUser(email, password) {
     const normalizedEmail = normalizeEmail(email);
     const normalizedPassword = String(password || "");
-    const user = usersByEmail.get(normalizedEmail);
+    const user = findUserByEmail(normalizedEmail);
 
     if (!user || user.password !== normalizedPassword) {
         return null;
@@ -43,4 +47,5 @@ function authenticateUser(email, password) {
 module.exports = {
     createUser,
     authenticateUser,
+    findUserByEmail,
 };

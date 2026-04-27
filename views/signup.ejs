@@ -11,13 +11,20 @@
 </head>
 
 <body>
+  <%
+    const currentActivePanel = typeof activePanel === "string" ? activePanel : "login";
+    const signupErrorState = signupErrors || {};
+    const loginErrorState = loginErrors || {};
+    const signupValueState = signupValues || {};
+    const loginValueState = loginValues || {};
+  %>
   <section class="section signup-section">
     <div class="container signup-container">
-      <div class="main">
-        <input type="checkbox" id="chk" aria-hidden="true" tabindex="-1" checked />
+      <div class="main" data-active-panel="<%= currentActivePanel %>">
+        <input type="checkbox" id="chk" aria-hidden="true" tabindex="-1" <%= currentActivePanel === "login" ? "checked" : "" %> />
 
         <div class="signup" id="signup-panel" aria-hidden="true">
-          <form method="post" action="/signup">
+          <form method="post" action="/signup" novalidate>
             <button
               type="button"
               class="panel-toggle panel-toggle-signup"
@@ -26,22 +33,58 @@
             >
               Sign up
             </button>
+            <% if (signupErrorState.form) { %>
+              <div class="form-error" role="alert"><%= signupErrorState.form %></div>
+            <% } %>
             <div class="signup-username">
-              <input type="text" name="SignUpUsername" placeholder="User name" required />
+              <input
+                class="<%= signupErrorState.username ? 'input-error' : '' %>"
+                type="text"
+                name="SignUpUsername"
+                placeholder="User name"
+                value="<%= signupValueState.username || '' %>"
+                aria-invalid="<%= signupErrorState.username ? 'true' : 'false' %>"
+                required
+              />
             </div>
+            <% if (signupErrorState.username) { %>
+              <div class="field-error" role="alert"><%= signupErrorState.username %></div>
+            <% } %>
             <div class="signup-email">
-              <input type="email" name="SignUpEmail" placeholder="Email" required />
+              <input
+                class="<%= signupErrorState.email ? 'input-error' : '' %>"
+                type="email"
+                name="SignUpEmail"
+                placeholder="Email"
+                value="<%= signupValueState.email || '' %>"
+                aria-invalid="<%= signupErrorState.email ? 'true' : 'false' %>"
+                required
+              />
             </div>
+            <% if (signupErrorState.email) { %>
+              <div class="field-error" role="alert"><%= signupErrorState.email %></div>
+            <% } %>
             <div class="signup-password">
-              <input type="password" name="SignUpPassword" placeholder="Password" required />
+              <input
+                class="<%= signupErrorState.password ? 'input-error' : '' %>"
+                type="password"
+                name="SignUpPassword"
+                placeholder="Password"
+                aria-invalid="<%= signupErrorState.password ? 'true' : 'false' %>"
+                minlength="8"
+                required
+              />
             </div>
+            <% if (signupErrorState.password) { %>
+              <div class="field-error" role="alert"><%= signupErrorState.password %></div>
+            <% } %>
             <div>
               <input class="button" name="SignUpSubmit" type="submit" value="Sign up" />
             </div>
           </form>
         </div>
         <div class="login" id="login-panel" aria-hidden="false">
-          <form method="post" action="/login">
+          <form method="post" action="/login" novalidate>
             <button
               type="button"
               class="panel-toggle panel-toggle-login"
@@ -50,12 +93,36 @@
             >
               Login
             </button>
+            <% if (loginErrorState.form) { %>
+              <div class="form-error" role="alert"><%= loginErrorState.form %></div>
+            <% } %>
             <div class="signup-email">
-              <input type="email" name="LoginEmail" placeholder="Enter your email" required />
+              <input
+                class="<%= loginErrorState.email ? 'input-error' : '' %>"
+                type="email"
+                name="LoginEmail"
+                placeholder="Enter your email"
+                value="<%= loginValueState.email || '' %>"
+                aria-invalid="<%= loginErrorState.email ? 'true' : 'false' %>"
+                required
+              />
             </div>
+            <% if (loginErrorState.email) { %>
+              <div class="field-error" role="alert"><%= loginErrorState.email %></div>
+            <% } %>
             <div class="signup-password">
-              <input type="password" name="LoginPassword" placeholder="Enter password" required />
+              <input
+                class="<%= loginErrorState.password ? 'input-error' : '' %>"
+                type="password"
+                name="LoginPassword"
+                placeholder="Enter password"
+                aria-invalid="<%= loginErrorState.password ? 'true' : 'false' %>"
+                required
+              />
             </div>
+            <% if (loginErrorState.password) { %>
+              <div class="field-error" role="alert"><%= loginErrorState.password %></div>
+            <% } %>
             <div>
               <input class="button" name="LoginSubmit" type="submit" value="Login" />
             </div>
@@ -66,11 +133,12 @@
   </section>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      const mainContainer = document.querySelector(".main");
       const chk = document.getElementById("chk");
       const signupPanel = document.getElementById("signup-panel");
       const loginPanel = document.getElementById("login-panel");
       const toggleButtons = document.querySelectorAll(".panel-toggle");
-      let activePanelName = "login";
+      let activePanelName = mainContainer.dataset.activePanel === "signup" ? "signup" : "login";
 
       function getPanelControls(panel) {
         return Array.from(
@@ -157,7 +225,7 @@
         });
       });
 
-      setActivePanel("login", false, true);
+      setActivePanel(activePanelName, false, true);
     });
   </script>
 </body>
