@@ -14,35 +14,48 @@
   <section class="section signup-section">
     <div class="container signup-container">
       <div class="main">
-        <input type="checkbox" id="chk" aria-hidden="true" />
+        <input type="checkbox" id="chk" aria-hidden="true" tabindex="-1" checked />
 
-        <div class="signup">
+        <div class="signup" id="signup-panel" aria-hidden="true">
           <form method="post" action="/signup">
-            <label for="chk" aria-hidden="true">Sign up</label>
+            <button
+              type="button"
+              class="panel-toggle panel-toggle-signup"
+              data-panel="signup"
+              aria-controls="signup-panel"
+            >
+              Sign up
+            </button>
             <div class="signup-username">
-              <input type="text" name="SignUpUsername" placeholder="User name" required="true" />
+              <input type="text" name="SignUpUsername" placeholder="User name" required />
             </div>
             <div class="signup-email">
-              <input type="email" name="SignUpEmail" placeholder="Email" required="true" />
+              <input type="email" name="SignUpEmail" placeholder="Email" required />
             </div>
             <div class="signup-password">
-              <input type="password" name="SignUpPassword" placeholder="Password" required="true" />
+              <input type="password" name="SignUpPassword" placeholder="Password" required />
             </div>
             <div>
               <input class="button" name="SignUpSubmit" type="submit" value="Sign up" />
             </div>
           </form>
         </div>
-        <div class="login">
+        <div class="login" id="login-panel" aria-hidden="false">
           <form method="post" action="/login">
-            <label for="chk" aria-hidden="true">Login</label>
+            <button
+              type="button"
+              class="panel-toggle panel-toggle-login"
+              data-panel="login"
+              aria-controls="login-panel"
+            >
+              Login
+            </button>
             <div class="signup-email">
-              <input type="email" name="LoginEmail" placeholder="Enter your email " required="true" />
+              <input type="email" name="LoginEmail" placeholder="Enter your email" required />
             </div>
             <div class="signup-password">
-              <input type="password" name="LoginPassword" placeholder="Enter password" required="true" />
+              <input type="password" name="LoginPassword" placeholder="Enter password" required />
             </div>
-            <!-- <button href="/auth">Log In</button> -->
             <div>
               <input class="button" name="LoginSubmit" type="submit" value="Login" />
             </div>
@@ -51,9 +64,101 @@
       </div>
     </div>
   </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const chk = document.getElementById("chk");
+      const signupPanel = document.getElementById("signup-panel");
+      const loginPanel = document.getElementById("login-panel");
+      const toggleButtons = document.querySelectorAll(".panel-toggle");
+      let activePanelName = "login";
+
+      function getPanelControls(panel) {
+        return Array.from(
+          panel.querySelectorAll("input, select, textarea, button, a[href]")
+        ).filter((element) => !element.classList.contains("panel-toggle"));
+      }
+
+      function setControlsEnabled(controls, enabled) {
+        controls.forEach((control) => {
+          if ("disabled" in control) {
+            control.disabled = !enabled;
+          }
+
+          if (enabled) {
+            control.removeAttribute("tabindex");
+          } else {
+            control.setAttribute("tabindex", "-1");
+          }
+        });
+      }
+
+      function focusFirstInput(panelName) {
+        const activePanel = panelName === "login" ? loginPanel : signupPanel;
+        const firstInput = activePanel.querySelector(
+          "input:not([type='hidden']):not([disabled])"
+        );
+
+        if (firstInput) {
+          firstInput.focus();
+        }
+      }
+
+      function setActivePanel(panelName, shouldFocusFirstInput = true, force = false) {
+        if (!force && panelName === activePanelName) {
+          return;
+        }
+
+        const isLogin = panelName === "login";
+        activePanelName = panelName;
+
+        chk.checked = isLogin;
+
+        signupPanel.setAttribute("aria-hidden", String(isLogin));
+        loginPanel.setAttribute("aria-hidden", String(!isLogin));
+
+        setControlsEnabled(getPanelControls(signupPanel), !isLogin);
+        setControlsEnabled(getPanelControls(loginPanel), isLogin);
+
+        toggleButtons.forEach((button) => {
+          button.disabled = false;
+          button.removeAttribute("tabindex");
+          button.setAttribute("aria-pressed", String(button.dataset.panel === panelName));
+        });
+
+        if (shouldFocusFirstInput) {
+          let focusHandled = false;
+
+          const finishFocus = () => {
+            if (focusHandled) {
+              return;
+            }
+
+            focusHandled = true;
+            loginPanel.removeEventListener("transitionend", handleTransitionEnd);
+            focusFirstInput(panelName);
+          };
+
+          const handleTransitionEnd = (event) => {
+            if (event.target !== loginPanel || event.propertyName !== "transform") {
+              return;
+            }
+
+            finishFocus();
+          };
+
+          loginPanel.addEventListener("transitionend", handleTransitionEnd);
+          window.setTimeout(finishFocus, 850);
+        }
+      }
+
+      toggleButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          setActivePanel(button.dataset.panel);
+        });
+      });
+
+      setActivePanel("login", false, true);
+    });
+  </script>
 </body>
-
-</html>
-</head>
-
 </html>

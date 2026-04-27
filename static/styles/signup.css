@@ -25,13 +25,17 @@ body{
 	width:100%;
 	height: 100%;
 }
-label{
+.panel-toggle{
 	color: rgb(104, 62, 195);
 	font-size: 2.3em;
 	justify-content: center;
 	display: flex;
+	width: calc(100% - 120px);
 	margin: 60px;
 	font-weight: bold;
+	font-family: inherit;
+	background: transparent;
+	border: 0;
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
@@ -44,7 +48,6 @@ input{
 	margin: 20px auto;
 	padding: 10px;
 	border: none;
-	outline: none;
 	border-radius: 10px;
 	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
 
@@ -61,7 +64,6 @@ input{
 	font-size: 1em;
 	font-weight: bold;
 	margin-top: 20px;
-	outline: none;
 	border: none;
 	border-radius: 5px;
 	transition: .2s ease-in;
@@ -77,17 +79,24 @@ input{
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
-.login label{
+.login .panel-toggle{
 	color: #573b8a;
+}
+.panel-toggle-login{
 	transform: scale(.6);
 }
-
 #chk:checked ~ .login{
 	transform: translateY(-500px);
 }
-#chk:checked ~ .login label{
-	transform: scale(1);	
+#chk:checked ~ .login .panel-toggle-login{
+	transform: scale(1);
 }
-#chk:checked ~ .signup label{
+#chk:checked ~ .signup .panel-toggle-signup{
 	transform: scale(.6);
+}
+.panel-toggle:focus-visible,
+input:focus-visible,
+.button:focus-visible{
+	outline: 3px solid #512d93;
+	outline-offset: 3px;
 }
