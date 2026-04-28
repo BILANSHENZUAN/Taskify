@@ -10,7 +10,7 @@ const { validateSignupInput, validateLoginInput } = require("./utils/validation"
 const views_path = path.join(__dirname, "../views");
 const static_path = path.join(__dirname, "../static");
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 function getSignupViewModel({
     activePanel = "login",
