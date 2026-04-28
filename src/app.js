@@ -67,6 +67,10 @@ app.get("/signup", (req, res) => {
     renderSignupPage(res);
 });
 
+app.get("/privacy", (req, res) => {
+    res.status(200).render("privacy.ejs");
+});
+
 app.post("/signup", (req, res) => {
     const { SignUpUsername, SignUpEmail, SignUpPassword } = req.body;
     const signupValues = {

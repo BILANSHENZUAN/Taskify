@@ -18,19 +18,26 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-  <link rel="stylesheet" href="../static/styles/main.css" />
-  <title>Taskify</title>
+  <link rel="stylesheet" href="/static/styles/main.css" />
+  <link rel="stylesheet" href="/static/styles/cookie-banner.css" />
+  <link rel="stylesheet" href="/static/styles/language-switcher.css" />
+  <title data-i18n-title="page.home.title">Taskify</title>
 </head>
 
-<body>
+<body data-page="home">
+  <%- include("../views/partials/language-switcher.ejs") %>
 
   <%-include("../views/partials/nav.ejs") %>
-    <%-include("../views/partials/hero.ejs") %>
+    <main>
+  <%-include("../views/partials/hero.ejs") %>
       <%-include("../views/partials/feature.ejs") %>
         <%-include("../views/partials/achievements.ejs") %>
+    </main>
           <%-include("../views/partials/footer.ejs") %>
+          <%-include("../views/partials/cookie-banner.ejs") %>
 
-
+  <script src="/static/scripts/cookie-banner.js"></script>
+  <script src="/static/scripts/i18n.js"></script>
 </body>
 
 </html>

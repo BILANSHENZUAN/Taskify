@@ -5,16 +5,20 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-  <link rel="stylesheet" href="../../static/styles/main.css" />
-  <link rel="stylesheet" href="../../static/styles/dashboard/dashboard.css">
+  <link rel="stylesheet" href="/static/styles/main.css" />
+  <link rel="stylesheet" href="/static/styles/dashboard/dashboard.css">
+  <link rel="stylesheet" href="/static/styles/cookie-banner.css" />
+  <link rel="stylesheet" href="/static/styles/language-switcher.css" />
+  <title data-i18n-title="page.dashboard.title">Dashboard</title>
 
-<body>
+<body data-page="dashboard">
+  <%- include("../partials/language-switcher.ejs") %>
+  <h1 class="sr-only" data-i18n="page.dashboard.heading">Taskify dashboard</h1>
   <!-- The main dashboard is here  -->
 
   <div class="dashboard-content-container">
@@ -26,7 +30,10 @@
       <%-include("../partials/dashboard/dashboard-cards.ejs") %>
     </div>
   </div>
+  <%- include("../partials/cookie-banner.ejs") %>
 
+  <script src="/static/scripts/cookie-banner.js"></script>
+  <script src="/static/scripts/i18n.js"></script>
 </body>
 
 </html>

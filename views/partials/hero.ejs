@@ -14,7 +14,7 @@
       <div class="container hero-container">
         <div class="hero-col-text">
           <div>
-            <h1 class="hero-heading">One app to
+            <h1 class="hero-heading" data-i18n="home.heroTitle">One app to
               replace them all</h1>
               
           </div>
@@ -22,15 +22,16 @@
             <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, explicabo. -->
           </div>
           
-          <input class="hero-input-email"type="email" name="email" id="hero-email" placeholder="Enter your email address">
+          <label class="sr-only" for="hero-email" data-i18n="home.emailLabel">Email address</label>
+          <input class="hero-input-email"type="email" name="email" id="hero-email" placeholder="Enter your email address" data-i18n-placeholder="home.heroEmailPlaceholder">
         
-          <a href="#" class="hero-btn">Get Started</a>
+          <a href="#" class="hero-btn" data-i18n="home.getStarted">Get Started</a>
         </div>
         
       
           
           <div class="hero-col-img">
-              <img class="hero-image" src="../../static/assets/laptop.png" >
+              <img class="hero-image" src="../../static/assets/laptop.png" alt="Illustration of the Taskify workspace on a laptop screen">
           
           </div>
 

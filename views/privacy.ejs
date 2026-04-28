@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-title="page.privacy.title">Privacy Policy</title>
+  <link rel="stylesheet" href="/static/styles/main.css" />
+  <link rel="stylesheet" href="/static/styles/privacy.css" />
+  <link rel="stylesheet" href="/static/styles/cookie-banner.css" />
+  <link rel="stylesheet" href="/static/styles/language-switcher.css" />
+</head>
+
+<body data-page="privacy">
+  <%- include("./partials/language-switcher.ejs") %>
+  <main class="privacy-page">
+    <section class="privacy-card" aria-labelledby="privacy-title">
+      <p class="privacy-eyebrow" data-i18n="privacy.eyebrow">Legal Compliance</p>
+      <h1 id="privacy-title" data-i18n="privacy.title">Privacy Policy</h1>
+      <p class="privacy-intro" data-i18n="privacy.intro">
+        This policy explains how Taskify handles account, session, and preference data for this course project build.
+      </p>
+
+      <div class="privacy-section">
+        <h2 data-i18n="privacy.informationHeading">Information we store</h2>
+        <p data-i18n="privacy.informationBody">
+          Taskify stores user account information such as username, email address, and task management related data that
+          supports the app experience.
+        </p>
+      </div>
+
+      <div class="privacy-section">
+        <h2 data-i18n="privacy.sessionsHeading">Sessions and preferences</h2>
+        <p data-i18n="privacy.sessionsBody">
+          Taskify uses session cookies to keep authenticated users signed in, and it may use localStorage to remember
+          preferences such as cookie consent.
+        </p>
+      </div>
+
+      <div class="privacy-section">
+        <h2 data-i18n="privacy.sharingHeading">Data sharing</h2>
+        <p data-i18n="privacy.sharingBody">
+          Taskify does not sell user data to third parties.
+        </p>
+      </div>
+
+      <div class="privacy-section">
+        <h2 data-i18n="privacy.endingHeading">Ending a session</h2>
+        <p data-i18n="privacy.endingBody">
+          Users can end an authenticated session by using the Log Out action, which clears the current session on the app.
+        </p>
+      </div>
+
+      <nav class="privacy-links" aria-label="Privacy page links" data-i18n-aria-label="privacy.pageLinksLabel">
+        <a href="/" data-i18n="privacy.backHome">Back to home</a>
+        <a href="/signup" data-i18n="privacy.goToSignup">Go to sign up or login</a>
+      </nav>
+    </section>
+  </main>
+
+  <%- include("./partials/cookie-banner.ejs") %>
+  <script src="/static/scripts/cookie-banner.js"></script>
+  <script src="/static/scripts/i18n.js"></script>
+</body>
+
+</html>

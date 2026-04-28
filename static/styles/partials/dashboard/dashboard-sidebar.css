@@ -66,8 +66,8 @@
   color: black;
 }
 .sidebar-items ul li a:hover {
-  background-color: gainsboro;
-  color: #0089ff;
+  background-color: #ece7f7;
+  color: #512d93;
   border-radius: 5px;
   transition: all .5s ease;
   width: 250px;
@@ -82,7 +82,7 @@
   font-size: 1em;
 }
 .sidebar-items ul li a:hover .sidebar-icon {
-  color: #0089ff;
+  color: #512d93;
 }
 
 .sidebar-items ul li a .sidebar-name {

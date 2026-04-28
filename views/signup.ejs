@@ -6,11 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../static/styles/signup.css" />
-  <title>SignUp</title>
+  <link rel="stylesheet" href="/static/styles/signup.css" />
+  <link rel="stylesheet" href="/static/styles/cookie-banner.css" />
+  <link rel="stylesheet" href="/static/styles/language-switcher.css" />
+  <title data-i18n-title="page.signup.title">Sign Up / Login</title>
 </head>
 
-<body>
+<body data-page="signup">
   <%
     const currentActivePanel = typeof activePanel === "string" ? activePanel : "login";
     const signupErrorState = signupErrors || {};
@@ -18,7 +20,9 @@
     const signupValueState = signupValues || {};
     const loginValueState = loginValues || {};
   %>
-  <section class="section signup-section">
+  <%- include("./partials/language-switcher.ejs") %>
+  <h1 id="signup-page-title" class="sr-only" data-i18n="page.signup.heading">Sign up or log in to Taskify</h1>
+  <main class="section signup-section" aria-labelledby="signup-page-title">
     <div class="container signup-container">
       <div class="main" data-active-panel="<%= currentActivePanel %>">
         <input type="checkbox" id="chk" aria-hidden="true" tabindex="-1" <%= currentActivePanel === "login" ? "checked" : "" %> />
@@ -30,6 +34,7 @@
               class="panel-toggle panel-toggle-signup"
               data-panel="signup"
               aria-controls="signup-panel"
+              data-i18n="signup.signUp"
             >
               Sign up
             </button>
@@ -37,49 +42,61 @@
               <div class="form-error" role="alert"><%= signupErrorState.form %></div>
             <% } %>
             <div class="signup-username">
+              <label class="sr-only" for="signup-username" data-i18n="signup.usernameLabel">User name</label>
               <input
+                id="signup-username"
                 class="<%= signupErrorState.username ? 'input-error' : '' %>"
                 type="text"
                 name="SignUpUsername"
                 placeholder="User name"
+                data-i18n-placeholder="signup.usernamePlaceholder"
                 value="<%= signupValueState.username || '' %>"
                 aria-invalid="<%= signupErrorState.username ? 'true' : 'false' %>"
+                <%- signupErrorState.username ? 'aria-describedby="signup-username-error"' : '' %>
                 required
               />
             </div>
             <% if (signupErrorState.username) { %>
-              <div class="field-error" role="alert"><%= signupErrorState.username %></div>
+              <div class="field-error" id="signup-username-error" role="alert"><%= signupErrorState.username %></div>
             <% } %>
             <div class="signup-email">
+              <label class="sr-only" for="signup-email" data-i18n="signup.emailLabel">Email address</label>
               <input
+                id="signup-email"
                 class="<%= signupErrorState.email ? 'input-error' : '' %>"
                 type="email"
                 name="SignUpEmail"
                 placeholder="Email"
+                data-i18n-placeholder="signup.emailPlaceholder"
                 value="<%= signupValueState.email || '' %>"
                 aria-invalid="<%= signupErrorState.email ? 'true' : 'false' %>"
+                <%- signupErrorState.email ? 'aria-describedby="signup-email-error"' : '' %>
                 required
               />
             </div>
             <% if (signupErrorState.email) { %>
-              <div class="field-error" role="alert"><%= signupErrorState.email %></div>
+              <div class="field-error" id="signup-email-error" role="alert"><%= signupErrorState.email %></div>
             <% } %>
             <div class="signup-password">
+              <label class="sr-only" for="signup-password" data-i18n="signup.passwordLabel">Password</label>
               <input
+                id="signup-password"
                 class="<%= signupErrorState.password ? 'input-error' : '' %>"
                 type="password"
                 name="SignUpPassword"
                 placeholder="Password"
+                data-i18n-placeholder="signup.passwordPlaceholder"
                 aria-invalid="<%= signupErrorState.password ? 'true' : 'false' %>"
+                <%- signupErrorState.password ? 'aria-describedby="signup-password-error"' : '' %>
                 minlength="8"
                 required
               />
             </div>
             <% if (signupErrorState.password) { %>
-              <div class="field-error" role="alert"><%= signupErrorState.password %></div>
+              <div class="field-error" id="signup-password-error" role="alert"><%= signupErrorState.password %></div>
             <% } %>
             <div>
-              <input class="button" name="SignUpSubmit" type="submit" value="Sign up" />
+              <input class="button" name="SignUpSubmit" type="submit" value="Sign up" data-i18n-value="signup.submitSignUp" />
             </div>
           </form>
         </div>
@@ -90,6 +107,7 @@
               class="panel-toggle panel-toggle-login"
               data-panel="login"
               aria-controls="login-panel"
+              data-i18n="signup.login"
             >
               Login
             </button>
@@ -97,40 +115,51 @@
               <div class="form-error" role="alert"><%= loginErrorState.form %></div>
             <% } %>
             <div class="signup-email">
+              <label class="sr-only" for="login-email" data-i18n="signup.loginEmailLabel">Login email address</label>
               <input
+                id="login-email"
                 class="<%= loginErrorState.email ? 'input-error' : '' %>"
                 type="email"
                 name="LoginEmail"
                 placeholder="Enter your email"
+                data-i18n-placeholder="signup.loginEmailPlaceholder"
                 value="<%= loginValueState.email || '' %>"
                 aria-invalid="<%= loginErrorState.email ? 'true' : 'false' %>"
+                <%- loginErrorState.email ? 'aria-describedby="login-email-error"' : '' %>
                 required
               />
             </div>
             <% if (loginErrorState.email) { %>
-              <div class="field-error" role="alert"><%= loginErrorState.email %></div>
+              <div class="field-error" id="login-email-error" role="alert"><%= loginErrorState.email %></div>
             <% } %>
             <div class="signup-password">
+              <label class="sr-only" for="login-password" data-i18n="signup.loginPasswordLabel">Login password</label>
               <input
+                id="login-password"
                 class="<%= loginErrorState.password ? 'input-error' : '' %>"
                 type="password"
                 name="LoginPassword"
                 placeholder="Enter password"
+                data-i18n-placeholder="signup.loginPasswordPlaceholder"
                 aria-invalid="<%= loginErrorState.password ? 'true' : 'false' %>"
+                <%- loginErrorState.password ? 'aria-describedby="login-password-error"' : '' %>
                 required
               />
             </div>
             <% if (loginErrorState.password) { %>
-              <div class="field-error" role="alert"><%= loginErrorState.password %></div>
+              <div class="field-error" id="login-password-error" role="alert"><%= loginErrorState.password %></div>
             <% } %>
             <div>
-              <input class="button" name="LoginSubmit" type="submit" value="Login" />
+              <input class="button" name="LoginSubmit" type="submit" value="Login" data-i18n-value="signup.submitLogin" />
             </div>
           </form>
         </div>
       </div>
     </div>
-  </section>
+  </main>
+  <%- include("./partials/cookie-banner.ejs") %>
+  <script src="/static/scripts/cookie-banner.js"></script>
+  <script src="/static/scripts/i18n.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const mainContainer = document.querySelector(".main");

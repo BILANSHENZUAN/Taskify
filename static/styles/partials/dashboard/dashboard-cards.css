@@ -102,11 +102,12 @@
   color: var(--clr-text);
 }
 .dashboard-task-number {
-  color: rgb(26, 94, 99);
-  background-color: #9ab9c4;
+  color: #ffffff;
+  background-color: #245f63;
   width: 30px;
   border-radius: 12px;
   border-top-right-radius: 0;
+  font-weight: 700;
 }
 .dashboard-add-button {
   color: rgb(26, 94, 99);
